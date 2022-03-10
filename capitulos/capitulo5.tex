@@ -1,0 +1,77 @@
+\chapter{Resultados Preliminares}
+\label{cap:resultados}
+
+Neste capítulo serão apresentados os resultados dos experimentos detalhados no capítulo anterior. Os erros simples estão dispostos nas tabelas a seguir como SE, do inglês \textit{single errors}. Erros duplo adjacentes são os DAE, do inglês \textit{double adjacent errors}. E por fim, os erros triplos são os TAE, do inglês \textit{triple adjacent errors}.
+
+\section{Discussão de Resultados}
+
+A Tabela \ref{tab:noprotect} apresenta a porcentagem de falsos positivos obtidos nos experimentos para o cenário sem código de proteção. As falhas do tipo DAE resultaram em valores mais expressivos, apontando que a alteração em dois bits adjacentes aumentou a probabilidade de falsos positivos. Para o tipo de falha TAE, ocorre uma diminuição no contador de falsos positivos, provavelmente devido aos endereços com erros triplos apontarem para endereços distantes, resultando em falsos negativos.
+
+\begin{table}[ht]
+\centering
+\caption{Porcentagem de falsos positivos para o cenário não protegido}
+\begin{tabular}{
+>{\columncolor[HTML]{EFEFEF}}c |c|c|c}
+\hline
+\textbf{Aplicação}    & \cellcolor[HTML]{EFEFEF}\textbf{SE(\%)} & \multicolumn{1}{l|}{\cellcolor[HTML]{EFEFEF}\textbf{DAE(\%)}} & \multicolumn{1}{l}{\cellcolor[HTML]{EFEFEF}\textbf{TAE(\%)}} \\ \hline
+\textbf{Merge sort}   & 1,37                                    & 2,14                                                          & 1,79                                                         \\ \hline
+\textbf{Compressão}   & 1,42                                    & 2,16                                                          & 1,73                                                         \\ \hline
+\textbf{FFT}          & 1,26                                    & 1,98                                                          & 1,40                                                         \\ \hline
+\textbf{Bloom Filter} & 1,22                                    & 2,37                                                          & 1,75                                                         \\ \hline
+\end{tabular}
+\label{tab:noprotect}
+\end{table}
+
+Os resultados da Tabela \ref{tab:fullprotect} indicam que o método de \cite{sanchez2019reducing} é bastante efetivo no tratamento de falsos positivos, evitando todos os erros nos três tipos de falha.
+
+
+\begin{table}[ht]
+\centering
+\caption{Porcentagem de falsos positivos para o código proposto em \cite{sanchez2019reducing}}
+\begin{tabular}{
+>{\columncolor[HTML]{EFEFEF}}c |c|c|c}
+\hline
+\textbf{Aplicação}    & \cellcolor[HTML]{EFEFEF}\textbf{SE(\%)} & \multicolumn{1}{l|}{\cellcolor[HTML]{EFEFEF}\textbf{DAE(\%)}} & \multicolumn{1}{l}{\cellcolor[HTML]{EFEFEF}\textbf{TAE(\%)}} \\ \hline
+\textbf{Merge sort}   & 0                                       & 0                                                             & 0                                                            \\ \hline
+\textbf{Compressão}   & 0                                       & 0                                                             & 0                                                            \\ \hline
+\textbf{FFT}          & 0                                       & 0                                                             & 0                                                            \\ \hline
+\textbf{Bloom Filter} & 0                                       & 0                                                             & 0                                                            \\ \hline
+\end{tabular}
+\label{tab:fullprotect}
+\end{table}
+
+A Tabela \ref{tab:my} apresenta os resultados para os cenários onde apenas os LSBs são utilizados para o cálculo das paridades, propostos neste trabalho. Para os cenários de 8- a 16-LSB, os resultados são similares aos obtidos com o método original. Para 4-LSB foi percebida uma redução considerável no número de falsos positivos. Por exemplo, para a aplicação do \textit{Merge Sort}, o número de falsos positivos é reduzido a 17\%\ para SE e 10\%\ para DAE e TAE.
+
+\begin{table}[ht]
+\centering
+\caption{Porcentagem de falsos positivos para cada cenário proposto}
+\begin{tabular}{
+>{\columncolor[HTML]{EFEFEF}}l |
+>{\columncolor[HTML]{EFEFEF}}l |c|c|c}
+\hline
+\textbf{Aplicação}                                     & \cellcolor[HTML]{EFEFEF}\textbf{Cenário} & \multicolumn{1}{l|}{\cellcolor[HTML]{EFEFEF}\textbf{SE(\%)}} & \multicolumn{1}{l|}{\cellcolor[HTML]{EFEFEF}\textbf{DAE(\%)}} & \multicolumn{1}{l}{\cellcolor[HTML]{EFEFEF}\textbf{TAE(\%)}} \\ \hline
+\cellcolor[HTML]{EFEFEF}                               & \cellcolor[HTML]{EFEFEF}4-LSB            & 0,24                                                         & 0,21                                                          & 0,17                                                         \\ \cline{2-5} 
+\cellcolor[HTML]{EFEFEF}                               & \cellcolor[HTML]{EFEFEF}8-LSB            & 0                                                            & 0                                                             & 0                                                            \\ \cline{2-5} 
+\cellcolor[HTML]{EFEFEF}                               & \cellcolor[HTML]{EFEFEF}12-LSB           & 0                                                            & 0                                                             & 0                                                            \\ \cline{2-5} 
+{\cellcolor[HTML]{EFEFEF}\textbf{Merge sort}}    & \cellcolor[HTML]{EFEFEF}16-LSB           & 0                                                            & 0                                                             & 0                                                            \\ \hline
+\cellcolor[HTML]{EFEFEF}                               & 4-LSB                                    & 0,21                                                         & 0,31                                                          & 0,27                                                         \\ \cline{2-5} 
+\cellcolor[HTML]{EFEFEF}                               & 8-LSB                                    & 0                                                            & 0                                                             & 0                                                            \\ \cline{2-5} 
+\cellcolor[HTML]{EFEFEF}                               & 12-LSB                                   & 0                                                            & 0                                                             & 0                                                            \\ \cline{2-5} 
+{\cellcolor[HTML]{EFEFEF}\textbf{Compressão}}   & 16-LSB                                   & 0                                                            & 0                                                             & 0                                                            \\ \hline
+\cellcolor[HTML]{EFEFEF}                               & 4-LSB                                    & 0,31                                                         & 0,19                                                          & 0,24                                                         \\ \cline{2-5} 
+\cellcolor[HTML]{EFEFEF}                               & 8-LSB                                    & 0                                                            & 0                                                             & 0                                                            \\ \cline{2-5} 
+\cellcolor[HTML]{EFEFEF}                               & 12-LSB                                   & 0                                                            & 0                                                             & 0                                                            \\ \cline{2-5} 
+{\cellcolor[HTML]{EFEFEF}\textbf{FFT}}          & 16-LSB                                   & 0                                                            & 0                                                             & 0                                                            \\ \hline
+\cellcolor[HTML]{EFEFEF}                               & 4-LSB                                    & 0,34                                                         & 0,28                                                          & 0,17                                                         \\ \cline{2-5} 
+\cellcolor[HTML]{EFEFEF}                               & 8-LSB                                    & 0                                                            & 0                                                             & 0                                                            \\ \cline{2-5} 
+\cellcolor[HTML]{EFEFEF}                               & 12-LSB                                   & 0                                                            & 0                                                             & 0                                                            \\ \cline{2-5} 
+{\cellcolor[HTML]{EFEFEF}\textbf{Bloom Filter}} & 16-LSB                                   & 0                                                            & 0                                                             & 0                                                            \\ \hline
+\end{tabular}
+\label{tab:my}
+\end{table}
+
+Em todas as aplicações do \textit{benchmark}, os resultados apontam que a maioria dos erros que geram falsos positivos acontecem se concentram nos bits menos significativos, e verificam que é possível proteger a i-TLB com um método simples e reduzindo o número de portas XOR usadas no circuito. 
+
+\section{Conclusão}
+
+SEUs e MCUs podem causar falsos positivos em i-TLBs gerando falhas graves como congelamento do sistema e corrupção silenciosa de dados. Os métodos para proteger os i-TLBs geralmente são baseados em bits de redundância e adicionam sobrecarga de área. Um código baseado apenas em paridade e sem bits extras é capaz de reduzir o número de falsos positivos. Neste trabalho, estendemos este código explorando ainda mais o princípio da localidade. Propomos calcular a paridade dos LSBs, pois erros nesses bits são mais propensos a causar falsos positivos do que erros nos bits superiores. Os resultados apontam que os cenários com 8-, 12- e 16-LSBs atingem níveis de proteção equivalentes ao código original. Além disso, o cenário com 4 LSBs também apresenta um bom desempenho.

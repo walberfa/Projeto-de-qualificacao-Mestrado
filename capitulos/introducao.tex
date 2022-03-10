@@ -1,0 +1,46 @@
+\chapter{Introdução}\label{cap:introducao}
+Os sistemas operacionais alocam programas que estão em execução em endereços
+da memória virtual, que são solicitados pelos programas e divididos nas chamadas páginas
+virtuais. Quando a memória virtual é usada, esses endereços não são
+diretamente colocados no barramento da memória, eles são enviados para a \textit{Memory
+Management Unit} (MMU), que é quem mapeia as páginas em endereços físicos da memória principal (RAM) de forma dinâmica, usando as tabelas de páginas.
+
+No entanto, endereços virtuais grandes (por exemplo, os de 32 e 64 bits)
+geram tabelas de páginas de tamanho significativo, impactando diretamente no
+desempenho do sistema. Com isso, e sabendo que os programas tendem a referenciar alguns campos da paginação com mais frequência, começou-se a usar uma cache que armazena apenas as páginas mais referenciadas, acelerando o processo de conversão. Essa cache é chamada \textit{translation lookaside buffer} (TLB),localiza-se dentro da MMU e pode funcionar como uma \textit{Content-Addressable Memory} (CAM) \cite{griffith2005tlb}.
+
+\section{Problemática}
+
+Os constantes avanços tecnológicos no campo da microeletrônica têm proporcionado dispositivos cada vez menores e mais integrados, o que contribui com a eficiência e a rapidez dos mesmos. No entanto, esse nível de integração dos circuitos torna esses dispositivos mais sensíveis a interferências externas. Quantos mais integrados os circuitos, mais células podem ser atingidas.
+
+Essas interferências podem causar dois tipos de evento: \textit{single event upset} (SEU) e \textit{multiple cells upset} (MCU), que respectivamente acontecem quando um ou múltiplos bits são atingidos \cite{chugg2004broadening}. Quando atingem as entradas de uma TLB, essas falhas podem gerar tratamento de falta de página, o que atrapalha a performance do sistema, e, nos piores casos, falhas mais graves, como congelamento do sistema e corrupção de dados.
+
+Diferentes métodos para proteger as TLBs contra SEUs e MCUs foram propostos ao longo de anos de pesquisa, incluindo técnicas de paridade \cite{griffith2005tlb}, redundância espacial \cite{lang2013processor} e técnicas de correção de erros \cite{sanchez2016combined}, \cite{pagiamtzis2006soft} e \cite{sanchez2012hamming}.No entanto, muitas dessas soluções requerem mais espaço de memória ou poder computacional, sobrecarregando o sistema.
+
+O trabalho em \cite{sanchez2019reducing}
+utiliza-se do princípio da localidade, que diz que os endereços referenciados tendem a estar próximos, para proteger TLBs de instruções contra erros adjacentes sem a inclusão de bits de redundância, apenas manipulando os números da página virtual (NPV) com cálculos de paridade.
+
+\section{Objetivo geral e objetivos específicos}
+
+O objetivo deste trabalho é estender a estratégia utilizada por \cite{sanchez2019reducing}, calculando a paridade com grupos menores de NPVs, em diferentes tamanhos, e mostrar os resultados comparando um cenário não protegido, o código original e os esquemas propostos.
+
+Para alcançar esse objetivo, se fazem necessários os objetivos específicos a seguir:
+
+\begin{itemize}
+    \item Implementar um simulador de TLB com um método de injeção de falhas pseudoaleatórias;
+.    \item Criar um \textit{benchmark} baseado em traces de memória de aplicações reais;
+    \item Implementar quatro cenários de códigos: 4-,8-,12-,16-LSB;
+    \item Avaliar o desempenho dos códigos propostos em relação a taxa de falsos positivos, bem como o tamanho do circuito em portas XOR.
+\end{itemize}
+
+\section{Estrutura do trabalho}
+
+O restante deste trabalho está organizado como segue:
+
+No Capítulo 2, as fundamentações teóricas apontam conhecimentos importantes para o entendimento da pesquisa. Além disso, apresenta uma revisão de trabalhos relacionados, apresentando códigos de correção de erros já propostos com aplicações semelhantes.
+
+No Capítulo 3 é mostrada a metodologia abordada neste trabalho, com passo-a-passo das atividades desenvolvidas e explicação sobre os códigos implementados.
+
+No Capítulo 4, são apresentados e discutidos os resultados preliminares obtidos com os experimentos realizados.
+
+E por fim, no Capítulo 5, um cronograma mensal com a perspectiva de realização de uma lista de atividades que termina com a defesa da dissertação.
